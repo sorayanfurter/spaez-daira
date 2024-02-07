@@ -4,6 +4,7 @@
   import { input } from './store';
 
   export let value: number;
+ 
 
   const dispatch = createEventDispatcher();
 
@@ -13,4 +14,4 @@
   }
 </script>
 
-<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" on:click={handleClick}>{value}</button>
+<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-6 px-6 h-20 w-20 " on:click={handleClick}>{value}</button>

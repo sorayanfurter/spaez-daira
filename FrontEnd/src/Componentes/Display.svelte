@@ -8,9 +8,9 @@
     $: result
 </script>
 
-<div>
-  <p>Entrada: {input}</p>
-  <p>Resultado: {result}</p>
+<div class="bg-black text-white p-4 text-right">
+  <p>{input}</p>
+  <p>{result}</p>
 </div>
 
 <style>
