@@ -1,4 +1,3 @@
-
 <script context="module" lang="ts">
   export interface HistoryEntry {
     fecha: string;

@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"math"
 	"net/http"
 	"time"
 
@@ -62,7 +63,7 @@ func calculadoraHandler(c *gin.Context) {
 
 		// Guardar en historial
 		historyEntry := HistoryEntry{
-			Fecha:     time.Now().Format("2006-01-02 15:04:05"),
+			Fecha:     time.Now().Format("2006-01-02"),
 			Operacion: fmt.Sprintf("%f %s %f", request.N1, request.Operacion, request.N2),
 			Resultado: result,
 		}
@@ -75,16 +76,17 @@ func calculadoraHandler(c *gin.Context) {
 }
 
 func performCalculation(n1, n2 float64, operacion string) (float64, error) {
+	result := 0.0
 	switch operacion {
 	case "+":
-		return n1 + n2, nil
+		result = n1 + n2
 	case "-":
-		return n1 - n2, nil
+		result = n1 - n2
 	case "*":
-		return n1 * n2, nil
+		result = n1 * n2
 	case "/":
 		if n2 != 0 {
-			return n1 / n2, nil
+			result = n1 / n2
 		} else {
 			// Manejar división por cero con un error
 			return 0, errors.New("División por cero")
@@ -92,6 +94,12 @@ func performCalculation(n1, n2 float64, operacion string) (float64, error) {
 	default:
 		return 0, errors.New("Operación no válida")
 	}
+
+	// Truncar a 2 decimales usando math.Floor o math.Round
+	result = math.Round(result*100) / 100
+	// Alternativamente, puedes usar math.Round(result*100) / 100 para redondear en lugar de truncar
+
+	return result, nil
 }
 
 func historyHandler(c *gin.Context) {

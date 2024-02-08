@@ -1,18 +1,24 @@
 <script context="module" lang="ts">
+
   import type { AxiosResponse } from "axios";
-  import { onMount } from "svelte";
   import type { HistoryEntry } from "./Componentes/Historial.svelte";
   import Display from "./Componentes/Display.svelte";
   import BotonNumerico from "./Componentes/BotonNumerico.svelte";
   import BotonOperacion from "./Componentes/BotonOperacion.svelte";
-  import Historial from "./Componentes/Historial.svelte";
+  import Historial from "./Componentes/Historial.svelte"
   import axios from "axios";
+  import { onMount } from "svelte"; 
+ 
 </script>
-
+ 
 <script lang="ts">
+  
+
+
   let input: string = "";
   let result: number = 0;
   let history: HistoryEntry[] = [];
+  
   $: {
     input;
     result;
@@ -87,133 +93,94 @@
   }
 </script>
 
-<div class="grid grid-cols-2 gap-4 p-4">
-  <div
-    class="grid grid-rows-1 gap-4 bg-white border-2 border-black justify-center m-20 p-8"
-  >
-    <div
-      class="bg-gray-200 text-black font-bold text-center text-3xl"
-    >
-      Calculadora Basica
-    </div>
-    <div class="grid grid-rows-1 gap-4 bg-white justify-center">
-      <!-- Display -->
-      <div class="bg-black text-white p-2 text-right">
-        <Display bind:input bind:result />
+<div class="grid grid-cols-2 gap-4">
+  <div class="col-span-1 p-10 flex items-center justify-center">
+   <div class=" grid bg-white border-2 border-black">
+      <div class="bg-gray-200 text-black font-bold text-center text-3xl p-10 h-30">
+        Calculadora Basica
       </div>
+      <!--Contenedor elementos calculadora-->
+      <div class="p-10">
+        <!-- Display -->
+        <div class="mt-1 justify-center m-1">
+          <Display bind:input bind:result />
+        </div>
+       <!--Teclado-->
+        <div class="grid grid-cols-4 grid-rows-5">
+          <!-- Fila 1 -->
 
-      <div class="grid grid-cols-4 grid-rows-5">
-        <!-- Fila 1 -->
-        <div class="w-full p-1">
-          <BotonOperacion operation="CE" on:buttonClick={handleButtonClick} />
-        </div>
-        <div class="w-full p-1">
-          <BotonOperacion operation="C" on:buttonClick={handleButtonClick} />
-        </div>
-        <div class="w-full p-1">
-          <BotonOperacion operation="+/-" on:buttonClick={handleButtonClick} />
-        </div>
-        <div class="w-full p-1">
-          <BotonOperacion operation="%" on:buttonClick={handleButtonClick} />
-        </div>
+            <BotonOperacion operation="CE" on:buttonClick={handleButtonClick}  style="background-color:orange" />
+            <BotonOperacion operation="C" on:buttonClick={handleButtonClick} style="background-color:orange" />
+            <BotonOperacion operation="+/-" on:buttonClick={handleButtonClick}  style="background-color:red" />
+            <BotonOperacion operation="%" on:buttonClick={handleButtonClick}  style="background-color:red" />         
 
-        <!-- Fila 2 -->
+          <!-- Fila 2 -->
 
-        <div class="w-full p-1">
-          <BotonNumerico value={7} on:buttonClick={handleButtonClick} />
-        </div>
-        <div class="w-full p-1">
-          <BotonNumerico value={8} on:buttonClick={handleButtonClick} />
-        </div>
-        <div class="w-full p-1">
-          <BotonNumerico value={9} on:buttonClick={handleButtonClick} />
-        </div>
-        <div class="w-full p-1">
-          <BotonOperacion operation="/" on:buttonClick={handleButtonClick} />
-        </div>
+            <BotonNumerico value={7} on:buttonClick={handleButtonClick} />
+            <BotonNumerico value={8} on:buttonClick={handleButtonClick} />
+            <BotonNumerico value={9} on:buttonClick={handleButtonClick} />
+            <BotonOperacion operation="/" on:buttonClick={handleButtonClick}  style="background-color:red" />
+          
+          <!-- Fila 3 -->
 
-        <!-- Fila 3 -->
-        <div class="w-full p-1">
-          <BotonNumerico value={4} on:buttonClick={handleButtonClick} />
-        </div>
-        <div class="w-full p-1">
-          <BotonNumerico value={5} on:buttonClick={handleButtonClick} />
-        </div>
-        <div class="w-full p-1">
-          <BotonNumerico value={6} on:buttonClick={handleButtonClick} />
-        </div>
-        <div class="w-full p-1">
-          <BotonOperacion operation="*" on:buttonClick={handleButtonClick} />
-        </div>
+            <BotonNumerico value={4} on:buttonClick={handleButtonClick} />
+            <BotonNumerico value={5} on:buttonClick={handleButtonClick} />       
+            <BotonNumerico value={6} on:buttonClick={handleButtonClick} />        
+            <BotonOperacion operation="*" on:buttonClick={handleButtonClick}  style="background-color:red" />
+          
+          <!-- Fila 4 -->
 
-        <!-- Fila 4 -->
+            <BotonNumerico value={1} on:buttonClick={handleButtonClick} />       
+            <BotonNumerico value={2} on:buttonClick={handleButtonClick} />        
+            <BotonNumerico value={3} on:buttonClick={handleButtonClick} />       
+            <BotonOperacion operation="-" on:buttonClick={handleButtonClick} style="background-color:red" />
+          
+          <!-- Fila 5 -->
 
-        <div class="w-full p-1">
-          <BotonNumerico value={1} on:buttonClick={handleButtonClick} />
+            <BotonNumerico value={0} on:buttonClick={handleButtonClick} />                
+            <BotonOperacion operation="." on:buttonClick={handleButtonClick} style="background-color:blue"/>        
+            <BotonOperacion operation="=" on:buttonClick={handleButtonClick} style="background-color:green" />                
+            <BotonOperacion operation="+" on:buttonClick={handleButtonClick} style="background-color:red"/>
+          
         </div>
-        <div class="w-full p-1">
-          <BotonNumerico value={2} on:buttonClick={handleButtonClick} />
-        </div>
-        <div class="w-full p-1">
-          <BotonNumerico value={3} on:buttonClick={handleButtonClick} />
-        </div>
-        <div class="w-full p-1">
-          <BotonOperacion operation="-" on:buttonClick={handleButtonClick} />
-        </div>
-
-        <!-- Fila 5 -->
-        <div class="w-full p-1">
-          <BotonNumerico value={0} on:buttonClick={handleButtonClick} />
-        </div>
-        <div class="w-full p-1">
-          <BotonOperacion operation="." on:buttonClick={handleButtonClick}/>
-        </div>
-        <div class="w-full p-1">
-          <BotonOperacion operation="=" on:buttonClick={handleButtonClick} />
-        </div>
-        <div class="w-full p-1">
-          <BotonOperacion operation="+" on:buttonClick={handleButtonClick} />
-        </div>
-      </div>
-    </div>
+      </div>      
+   </div>
   </div>
-  <div class="col-span-1 p-10">
+  
+  <!--Contenedor Historial-->
+  <div class="col-span-1 p-10 flex justify-center">
     <!-- Historial -->
-    {#if history && history.length > 0}
-      <div class="bg-white border-2 border-black p-10">
-        <div
-          class="bg-gray-200 p-10 text-black font-bold text-center text-3xl"
-        >
+      <div class="bg-white border-2 border-black">
+        <div class="bg-gray-200 p-10 text-black font-bold text-center text-3xl">
           Calculadora Basica
-        </div>
+        </div>  
         <h2 class=" font-bold mb-4 text-center text-3xl pt-8">Historial</h2>
-        <table class="min-w-full bg-black text-white">
+      <div class="p-2">
+        <table class="w-full bg-black text-white text-center items-center ">
           <thead>
-            <tr>
-              <th class="border-b-2 border-gray-400 py-2">Fecha</th>
-              <th class="border-b-2 border-gray-400 py-2">Operación</th>
-              <th class="border-b-2 border-gray-400 py-2">Resultado</th>
+            <tr class="justify-center items-center">
+              <th class="border-b-2 border-gray-400 py-2 text-center">Fecha</th>
+              <th class="border-b-2 border-gray-400  py-2 text-center">Operación</th>
+              <th class="border-b-2 border-gray-400 py-2 text-center">Resultado</th>
             </tr>
           </thead>
           <tbody>
+            {#if history && history.length > 0}
             {#each history as entry}
               <tr class="border-b border-gray-300">
-                <td class="py-2">{entry.fecha}</td>
-                <td class="py-2">{entry.operacion}</td>
-                <td class="py-2">{entry.resultado}</td>
+                <td class="py-2 text-center">{entry.fecha}</td>
+                <td class="py-2 text-center">{entry.operacion}</td>
+                <td class="py-2 text-center">{entry.resultado}</td>
               </tr>
-            {/each}
+            {/each}             
+            {/if}
           </tbody>
         </table>
       </div>
-    {:else}
-      <p>Cargando historial...</p>
-    {/if}
+    </div>
   </div>
-</div>
+</div>  
 
-<style>
-  @import "tailwindcss/base.css";
-  @import "tailwindcss/components.css";
-  @import "tailwindcss/utilities.css";
-</style>
+
+
+  
