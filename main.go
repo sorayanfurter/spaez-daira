@@ -34,7 +34,7 @@ func main() {
 
 	//Cors
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:8080"} // Add your Svelte app's origin
+	config.AllowOrigins = []string{"http://localhost:8080"}
 	config.AllowMethods = []string{"GET", "POST", "OPTIONS", "PUT", "PATCH", "DELETE"}
 	router.Use(cors.New(config))
 
@@ -54,7 +54,7 @@ func calculadoraHandler(c *gin.Context) {
 	}
 
 	switch request.Operacion {
-	case "+", "-", "*", "/":
+	case "+", "-", "x", "÷":
 		result, err := performCalculation(request.N1, request.N2, request.Operacion)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -64,7 +64,7 @@ func calculadoraHandler(c *gin.Context) {
 		// Guardar en historial
 		historyEntry := HistoryEntry{
 			Fecha:     time.Now().Format("2006-01-02"),
-			Operacion: fmt.Sprintf("%f %s %f", request.N1, request.Operacion, request.N2),
+			Operacion: fmt.Sprintf("%.2f %s %.2f", request.N1, request.Operacion, request.N2),
 			Resultado: result,
 		}
 		history = append(history, historyEntry)
@@ -82,9 +82,9 @@ func performCalculation(n1, n2 float64, operacion string) (float64, error) {
 		result = n1 + n2
 	case "-":
 		result = n1 - n2
-	case "*":
+	case "x":
 		result = n1 * n2
-	case "/":
+	case "÷":
 		if n2 != 0 {
 			result = n1 / n2
 		} else {
@@ -95,9 +95,8 @@ func performCalculation(n1, n2 float64, operacion string) (float64, error) {
 		return 0, errors.New("Operación no válida")
 	}
 
-	// Truncar a 2 decimales usando math.Floor o math.Round
+	// Redondeo a 2 decimales
 	result = math.Round(result*100) / 100
-	// Alternativamente, puedes usar math.Round(result*100) / 100 para redondear en lugar de truncar
 
 	return result, nil
 }

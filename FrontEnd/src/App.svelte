@@ -31,6 +31,8 @@
 
   function handleOperationInput(operation: string): void {
     if (input.length > 0) {
+      const n1 = parseFloat(input.split(" ")[0]).toFixed(2);
+      const n2 = parseFloat(input.split(" ")[2]).toFixed(2);
       input += ` ${operation} `;
     }
   }
@@ -119,14 +121,14 @@
             <BotonNumerico value={7} on:buttonClick={handleButtonClick} />
             <BotonNumerico value={8} on:buttonClick={handleButtonClick} />
             <BotonNumerico value={9} on:buttonClick={handleButtonClick} />
-            <BotonOperacion operation="/" on:buttonClick={handleButtonClick}  style="background-color:red" />
+            <BotonOperacion operation="÷" on:buttonClick={handleButtonClick}  style="background-color:red" />
           
           <!-- Fila 3 -->
 
             <BotonNumerico value={4} on:buttonClick={handleButtonClick} />
             <BotonNumerico value={5} on:buttonClick={handleButtonClick} />       
             <BotonNumerico value={6} on:buttonClick={handleButtonClick} />        
-            <BotonOperacion operation="*" on:buttonClick={handleButtonClick}  style="background-color:red" />
+            <BotonOperacion operation="x" on:buttonClick={handleButtonClick}  style="background-color:red" />
           
           <!-- Fila 4 -->
 
